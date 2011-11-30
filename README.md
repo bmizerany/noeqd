@@ -1,6 +1,6 @@
 # noeqd - A fault-tolerant network service for meaningful GUID generation
 
-Based on [snowflake]().
+Based on [snowflake][].
 
 ## Motivation
 
