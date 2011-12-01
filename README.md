@@ -23,7 +23,7 @@ This network service should also have these properties (Differences from [snowfl
 
 * `GUID`: Globally Unique Identifier
 * `datacenter`: A facility used to house computer systems.
-* `worker`: A single `noeq` process with a worker and datacenter ID combination unique to their cohort.
+* `worker`: A single `noeqd` process with a worker and datacenter ID combination unique to their cohort.
 * `datacenter-id`: An integer representing a particular datacenter.
 * `worker-id`: An integer representing a particular worker.
 * `machine-id`: The comination of `datacenter-id` and `worker-id`
@@ -62,21 +62,21 @@ until you've reached this limit.
 ## Install
 
 You can install noeqd by downloading the binary
-[here](http://github.com/bmizerany/noeq/downloads) and putting it in your
+[here](http://github.com/bmizerany/noeqd/downloads) and putting it in your
 `PATH`.
 
 *or*
 
 Clone the repo and build with [Go](http://golang.org/doc/install.html) (Requires Go `b4a91b693374 weekly/weekly.2011-11-18` or later)
 
-		$ git clone http://github.com/bmizerany/noeq
-		$ cd noeq
+		$ git clone http://github.com/bmizerany/noeqd
+		$ cd noeqd
 		$ make install
 
 ## Run
 
-		$ noeq -h
-		Usage of noeq:
+		$ noeqd -h
+		Usage of noeqd:
 		  -d=0: datacenter id
 		  -l="0.0.0.0:4444": the address to listen on
 		  -w=0: worker id
@@ -103,7 +103,7 @@ example script in the repo for doing so if you need it (using [Doozer][]):
 		do wid=`expr $wid + 1`
 		done
 
-		exec noeq -w $wid -d $did
+		exec noeqd -w $wid -d $did
 
 ## The Why
 
@@ -121,8 +121,8 @@ in the very near future. See benchmarks near the end of this README.
 
 **Uncoordinated**
 
-We need all `noeq`s to be able to generate GUIDs without coordinating with
-other `noeq` processes. Coordination requires more time complexity than if
+We need all `noeqd`s to be able to generate GUIDs without coordinating with
+other `noeqd` processes. Coordination requires more time complexity than if
 we didn't require it and reduces the amount of GUIDs we can generate during
 that time. It also affects the yield (the probability the service will complete
 a request).
@@ -267,7 +267,7 @@ pull-request button.
 
 ## Issues
 
-These are tracked in this repos Github [issues tracker](http://github.com/bmizerany/noeq).
+These are tracked in this repos Github [issues tracker](http://github.com/bmizerany/noeqd/issues).
 
 ## See Also
 
