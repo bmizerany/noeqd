@@ -117,7 +117,7 @@ func serve(r io.Reader, w io.Writer) error {
 }
 
 func milliseconds() int64 {
-	return time.Nanoseconds() / 1e6
+	return time.Now().UnixNano() / 1e6
 }
 
 func nextId() (int64, error) {
