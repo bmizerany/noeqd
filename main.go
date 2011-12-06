@@ -93,7 +93,7 @@ func serve(r io.Reader, w io.Writer) error {
 		for i := uint(0); i < n; i++ {
 			id, err := nextId()
 			if err != nil {
-				panic(err)
+				return err
 			}
 
 			off := i * 8
