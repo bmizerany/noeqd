@@ -46,11 +46,11 @@ func main() {
 func parseFlags() {
 	flag.Parse()
 	if *wid < 0 || *wid > maxWorkerId {
-		log.Fatal("worker id must be between 0 and %d", maxWorkerId)
+		log.Fatalf("worker id must be between 0 and %d", maxWorkerId)
 	}
 
 	if *did < 0 || *did > maxDatacenterId {
-		log.Fatal("datacenter id must be between 0 and %d", maxDatacenterId)
+		log.Fatalf("datacenter id must be between 0 and %d", maxDatacenterId)
 	}
 }
 
