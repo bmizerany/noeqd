@@ -72,6 +72,9 @@ func mustListen() net.Listener {
 func acceptAndServeHTTP(l net.Listener) {
 	m := http.NewServeMux()
 	m.HandleFunc("/g", func(w http.ResponseWriter, r *http.Request) {
+		if r.Method != "POST" {
+			http.NotFound(w, r)
+		}
 		serve(r.Body, w)
 	})
 	http.Serve(l, m)
