@@ -28,11 +28,11 @@ const (
 
 // Flags
 var (
-	wid   = flag.Int64("w", 0, "worker id")
-	did   = flag.Int64("d", 0, "datacenter id")
-	laddr = flag.String("l", "0.0.0.0:4444", "the address to listen on")
-	lts   = flag.Int64("t", -1, "the last timestamp in milliseconds")
-	httpmode  = flag.Bool("http", false, "run in http mode")
+	wid      = flag.Int64("w", 0, "worker id")
+	did      = flag.Int64("d", 0, "datacenter id")
+	laddr    = flag.String("l", "0.0.0.0:4444", "the address to listen on")
+	lts      = flag.Int64("t", -1, "the last timestamp in milliseconds")
+	httpmode = flag.Bool("http", false, "run in http mode")
 )
 
 var (
