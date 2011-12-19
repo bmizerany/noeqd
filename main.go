@@ -6,7 +6,6 @@ import (
 	"io"
 	"log"
 	"net"
-	"net/http"
 	"sync"
 	"time"
 )
@@ -32,7 +31,6 @@ var (
 	did      = flag.Int64("d", 0, "datacenter id")
 	laddr    = flag.String("l", "0.0.0.0:4444", "the address to listen on")
 	lts      = flag.Int64("t", -1, "the last timestamp in milliseconds")
-	httpmode = flag.Bool("http", false, "run in http mode")
 )
 
 var (
@@ -42,12 +40,7 @@ var (
 
 func main() {
 	parseFlags()
-	l := mustListen()
-	if *httpmode {
-		acceptAndServeHTTP(l)
-	} else {
-		acceptAndServe(l)
-	}
+	acceptAndServe(mustListen())
 }
 
 func parseFlags() {
@@ -67,17 +60,6 @@ func mustListen() net.Listener {
 		log.Fatal(err)
 	}
 	return l
-}
-
-func acceptAndServeHTTP(l net.Listener) {
-	m := http.NewServeMux()
-	m.HandleFunc("/g", func(w http.ResponseWriter, r *http.Request) {
-		if r.Method != "POST" {
-			http.NotFound(w, r)
-		}
-		serve(r.Body, w)
-	})
-	http.Serve(l, m)
 }
 
 func acceptAndServe(l net.Listener) {
