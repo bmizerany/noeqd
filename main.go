@@ -1,13 +1,24 @@
 package main
 
 import (
+	"errors"
 	"flag"
 	"fmt"
 	"io"
 	"log"
 	"net"
+	"os"
 	"sync"
 	"time"
+)
+
+var (
+	ErrInvalidRequest = errors.New("invalid request")
+	ErrInvalidAuth    = errors.New("invalid auth")
+)
+
+var (
+	token = os.Getenv("NOEQ_TOKEN")
 )
 
 const (
@@ -80,6 +91,13 @@ func acceptAndServe(l net.Listener) {
 }
 
 func serve(r io.Reader, w io.Writer) error {
+	if token != "" {
+		err := auth(r)
+		if err != nil {
+			return err
+		}
+	}
+
 	c := make([]byte, 1)
 	for {
 		// Wait for 1 byte request
@@ -89,6 +107,7 @@ func serve(r io.Reader, w io.Writer) error {
 		}
 
 		n := uint(c[0])
+
 		b := make([]byte, n*8)
 		for i := uint(0); i < n; i++ {
 			id, err := nextId()
@@ -148,4 +167,28 @@ func nextId() (int64, error) {
 		seq
 
 	return id, nil
+}
+
+func auth(r io.Reader) error {
+	b := make([]byte, 1)
+	_, err := io.ReadFull(r, b)
+	if err != nil {
+		return err
+	}
+
+	if b[0] != 0 {
+		return ErrInvalidRequest
+	}
+
+	b = make([]byte, len(token))
+	_, err = io.ReadFull(r, b)
+	if err != nil {
+		return err
+	}
+
+	if string(b) != token {
+		return ErrInvalidAuth
+	}
+
+	return nil
 }
