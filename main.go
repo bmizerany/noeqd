@@ -107,6 +107,10 @@ func serve(r io.Reader, w io.Writer) error {
 		}
 
 		n := uint(c[0])
+		if n == 0 {
+			// No authing at this point
+			return ErrInvalidRequest
+		}
 
 		b := make([]byte, n*8)
 		for i := uint(0); i < n; i++ {
