@@ -170,13 +170,17 @@ func nextId() (int64, error) {
 }
 
 func auth(r io.Reader) error {
-	b := make([]byte, 1)
+	b := make([]byte, 2)
 	_, err := io.ReadFull(r, b)
 	if err != nil {
 		return err
 	}
 
-	b = make([]byte, b[0])
+	if b[0] != 0 {
+		return ErrInvalidRequest
+	}
+
+	b = make([]byte, b[1])
 	_, err = io.ReadFull(r, b)
 	if err != nil {
 		return err
