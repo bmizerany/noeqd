@@ -206,13 +206,14 @@ example.
 
 If the server has its `NOEQ_TOKEN` environment variable set to an non-empty string, the server will require authentication.
 
-		---------
-		|0|token|
-		---------
+		-------------------------------
+		|<byte:len of token>|token ...|
+		-------------------------------
 
-An auth request starts with a 0 byte, followed by the token string. (NOTE: If a
-client and server hang during authentication, it's probably because the token
-is the client sent is too short.)
+An auth request starts with a byte that is the length of the follwing token,
+followed by the token string. (NOTE: If a client and server hang during
+authentication, it's probably because the token is the client sent is too
+short.)
 
 *Id Request*:
 

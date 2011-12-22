@@ -176,11 +176,7 @@ func auth(r io.Reader) error {
 		return err
 	}
 
-	if b[0] != 0 {
-		return ErrInvalidRequest
-	}
-
-	b = make([]byte, len(token))
+	b = make([]byte, b[0])
 	_, err = io.ReadFull(r, b)
 	if err != nil {
 		return err
