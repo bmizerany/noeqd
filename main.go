@@ -148,6 +148,11 @@ func nextId() (int64, error) {
 	defer mu.Unlock()
 
 	ts := milliseconds()
+
+	if ts < *lts {
+		return 0, fmt.Errorf("time is moving backwards, waiting until %d\n", *lts)
+	}
+
 	if *lts == ts {
 		seq = (seq + 1) & sequenceMask
 		if seq == 0 {
@@ -157,10 +162,6 @@ func nextId() (int64, error) {
 		}
 	} else {
 		seq = 0
-	}
-
-	if ts < *lts {
-		return 0, fmt.Errorf("time is moving backwards, waiting until %d\n", *lts)
 	}
 
 	*lts = ts
