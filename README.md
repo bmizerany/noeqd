@@ -134,9 +134,9 @@ a reasonable bound (10's of ms to no more than 1s). More on this in "How it work
 
 References:
 
-<http://portal.acm.org/citation.cfm?id=70413.70419>
+<http://ci.nii.ac.jp/naid/110002673556>
 
-<http://portal.acm.org/citation.cfm?id=110778.110783>
+<http://ci.nii.ac.jp/naid/110002673489>
 
 # The "Why not snowflake?"
 
